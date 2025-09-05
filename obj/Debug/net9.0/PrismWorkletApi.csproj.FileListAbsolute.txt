@@ -84,3 +84,4 @@ C:\samsung\PrismWorkletAPi\obj\Debug\net9.0\refint\PrismWorkletApi.dll
 C:\samsung\PrismWorkletAPi\obj\Debug\net9.0\PrismWorkletApi.pdb
 C:\samsung\PrismWorkletAPi\obj\Debug\net9.0\PrismWorkletApi.genruntimeconfig.cache
 C:\samsung\PrismWorkletAPi\obj\Debug\net9.0\ref\PrismWorkletApi.dll
+C:\samsung\PrismWorkletAPi\obj\Debug\net9.0\PrismWorkletApi.sourcelink.json

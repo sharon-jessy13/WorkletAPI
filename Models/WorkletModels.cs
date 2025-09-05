@@ -44,8 +44,9 @@ namespace PrismWorkletApi.Models
 
     public class MentorSearchResult
     {
-        public int EmployeeId { get; set; }
-        public string Name { get; set; }
+       public int MEmpID { get; set; }
+        public string FullName { get; set; } = string.Empty;
+        public int EId { get; set; }
     }
 
     public class WorkletDetailsModel
@@ -71,6 +72,6 @@ namespace PrismWorkletApi.Models
 
     public class WorkletMentorDetailsModel : MentorModel
     {
-        // Inherits from MentorModel
+        
     }
 }

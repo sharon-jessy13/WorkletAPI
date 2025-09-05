@@ -9,6 +9,7 @@ namespace PrismWorkletApi.Repositories
     {
         Task<IEnumerable<MentorSearchResult>> SearchAsync(string query);
     }
+
     public sealed class MentorRepository : IMentorRepository
     {
         private readonly string _connectionString;
@@ -22,11 +23,22 @@ namespace PrismWorkletApi.Repositories
         public async Task<IEnumerable<MentorSearchResult>> SearchAsync(string query)
         {
             using var conn = new SqlConnection(_connectionString);
-            var parameters = new { SearchQuery = $"%{query}%" };
-            return await conn.QueryAsync<MentorSearchResult>(
-                "WFSRV_LiveEMPDetails",
-                parameters,
+
+            
+            var allMentors = await conn.QueryAsync<MentorSearchResult>(
+                "WFSRV_liveEMPDetails",
+                null, 
                 commandType: CommandType.StoredProcedure);
+
+           
+            if (!string.IsNullOrEmpty(query))
+            {
+                
+                return allMentors.Where(m => 
+                    m.FullName.Contains(query, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return allMentors;
         }
     }
 }
