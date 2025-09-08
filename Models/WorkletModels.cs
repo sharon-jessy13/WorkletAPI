@@ -69,9 +69,15 @@ namespace PrismWorkletApi.Models
         public string? FilePath { get; set; }
         public DateTime UploadedDate { get; set; }
     }
+    
+    public class CollegeModel
+    {
+        public int CollegeId { get; set; }
+        public string CollegeName { get; set; } = string.Empty;
+    }
 
     public class WorkletMentorDetailsModel : MentorModel
     {
-        
+
     }
 }

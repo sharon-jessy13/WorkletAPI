@@ -40,10 +40,10 @@ public class PrismWorkletController : ControllerBase
                 {
                     var slideParts = doc.PresentationPart?.SlideParts.ToList();
                     if (slideParts == null || !slideParts.Any()) return Ok(data);
-                    
+
                     var firstSlideText = slideParts.First().Slide.Descendants<Text>().Select(t => t.Text);
                     data.Title = firstSlideText.FirstOrDefault() ?? "Title not found";
-                    
+
                     var allTextBuilder = new StringBuilder();
                     foreach (var slidePart in slideParts)
                     {
@@ -56,7 +56,7 @@ public class PrismWorkletController : ControllerBase
                         }
                     }
                     string fullText = allTextBuilder.ToString();
-                    
+
                     const string problemStmtKeyword = "Problem Statement";
                     int problemStmtIndex = fullText.IndexOf(problemStmtKeyword, StringComparison.OrdinalIgnoreCase);
                     if (problemStmtIndex != -1)
@@ -77,6 +77,13 @@ public class PrismWorkletController : ControllerBase
         }
     }
 
+    [HttpGet("colleges")]
+    public async Task<IActionResult> GetColleges()
+    {
+        var colleges = await _mentorRepository.GetCollegesAsync();
+        return Ok(colleges);
+    }
+
     [HttpGet("mentors/search")]
     public async Task<IActionResult> SearchMentors([FromQuery] string query)
     {
@@ -88,13 +95,26 @@ public class PrismWorkletController : ControllerBase
         return Ok(mentors);
     }
 
-    [HttpPost("create")]
+    [HttpPost("submit")]
     public async Task<IActionResult> CreateWorklet([FromBody] WorkletCreateModel model)
     {
-        if (model == null || !model.Mentors.Any(m => m.IsPrimary))
+        if (model == null)
         {
-            return BadRequest("Invalid data. A primary mentor must be specified.");
+            return BadRequest("Invalid worklet data provided.");
         }
+
+        if (!model.Mentors.Any(m => m.IsPrimary))
+        {
+            return BadRequest("A primary mentor must be specified.");
+        }
+
+        if (string.IsNullOrWhiteSpace(model.Title) ||
+            string.IsNullOrWhiteSpace(model.ProblemStatement) ||
+            string.IsNullOrWhiteSpace(model.Prerequisites))
+        {
+            return BadRequest("Title, Problem Statement, and Prerequisites are mandatory fields.");
+        }
+
 
         try
         {

@@ -13,7 +13,7 @@ namespace PrismWorkletApi.Repositories
         Task<IEnumerable<WorkletMentorDetailsModel>> GetMentorDetailsAsync(int initiatorMEmpID, int instanceID);
     }
 
-  
+
     public sealed class WorkletRepository : IWorkletRepository
     {
         private readonly string _connectionString;
@@ -45,10 +45,17 @@ namespace PrismWorkletApi.Repositories
 
                 await conn.ExecuteAsync("PRISMWorklet_InsertMaster", new
                 {
-                    WorkletID = workletId, model.Title, ProblemStmt = model.ProblemStatement,
-                    Prerequest = model.Prerequisites, CreatedMentorID = primaryMentor.MentorId,
-                    CreatedMentor = primaryMentor.MentorName, model.StartDate, model.EndDate,
-                    model.StudentCount, IsActive = 1, CreatedOn = DateTime.UtcNow,
+                    WorkletID = workletId,
+                    model.Title,
+                    ProblemStmt = model.ProblemStatement,
+                    Prerequest = model.Prerequisites,
+                    CreatedMentorID = primaryMentor.MentorId,
+                    CreatedMentor = primaryMentor.MentorName,
+                    model.StartDate,
+                    model.EndDate,
+                    model.StudentCount,
+                    IsActive = 1,
+                    CreatedOn = DateTime.UtcNow,
                     GitHubUrl = model.GitHubUrl ?? string.Empty
                 }, transaction: tran, commandType: CommandType.StoredProcedure);
 
@@ -57,7 +64,9 @@ namespace PrismWorkletApi.Repositories
                 {
                     await conn.ExecuteAsync("PRISMWorklet_InsertSecondryMentor", new
                     {
-                        WorkletID = workletId, UID = mentor.MentorId, IsActive = 1
+                        WorkletID = workletId,
+                        UID = mentor.MentorId,
+                        IsActive = 1
                     }, transaction: tran, commandType: CommandType.StoredProcedure);
                 }
 
@@ -94,5 +103,7 @@ namespace PrismWorkletApi.Repositories
             return await conn.QueryAsync<WorkletMentorDetailsModel>(
                 "PRISMWorklet_GetMentorDetails", parameters, commandType: CommandType.StoredProcedure);
         }
+        
+        
     }
 }
