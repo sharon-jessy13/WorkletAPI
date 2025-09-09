@@ -133,28 +133,45 @@ public class PrismWorkletController : ControllerBase
         }
     }
 
-    [HttpGet("{instanceId}/details")]
-    public async Task<IActionResult> GetWorkletDetails(int instanceId, [FromQuery] int initiatorMEmpId)
+    [HttpGet("{instanceId}")]
+    public async Task<IActionResult> GetFullWorkletDetails(int instanceId, [FromQuery] int initiatorMEmpId)
     {
-        if (initiatorMEmpId <= 0) return BadRequest("A valid initiator employee ID is required.");
-        var details = await _workletRepository.GetWorkletDetailsAsync(initiatorMEmpId, instanceId);
-        if (details == null) return NotFound("Worklet details not found.");
+        if (instanceId <= 0 || initiatorMEmpId <= 0)
+        {
+            return BadRequest("A valid instance ID and initiator employee ID are required.");
+        }
+
+        var details = await _workletRepository.GetFullWorkletDetailsAsync(initiatorMEmpId, instanceId);
+
+        if (details == null)
+        {
+            return NotFound("Worklet not found.");
+        }
+
         return Ok(details);
     }
 
-    [HttpGet("{instanceId}/attachments")]
-    public async Task<IActionResult> GetAttachmentDetails(int instanceId, [FromQuery] int initiatorMEmpId)
-    {
-        if (initiatorMEmpId <= 0) return BadRequest("A valid initiator employee ID is required.");
-        var attachments = await _workletRepository.GetAttachmentDetailsAsync(initiatorMEmpId, instanceId);
-        return Ok(attachments);
-    }
+    // [HttpGet("{instanceId}/details")]
+    // public async Task<IActionResult> GetWorkletDetails(int instanceId, [FromQuery] int initiatorMEmpId)
+    // {
+    //     if (initiatorMEmpId <= 0) return BadRequest("A valid initiator employee ID is required.");
+    //     var details = await _workletRepository.GetWorkletDetailsAsync(initiatorMEmpId, instanceId);
+    //     if (details == null) return NotFound("Worklet details not found.");
+    //     return Ok(details);
+    // }
 
-    [HttpGet("{instanceId}/mentors")]
-    public async Task<IActionResult> GetMentorDetails(int instanceId, [FromQuery] int initiatorMEmpId)
-    {
-        if (initiatorMEmpId <= 0) return BadRequest("A valid initiator employee ID is required.");
-        var mentors = await _workletRepository.GetMentorDetailsAsync(initiatorMEmpId, instanceId);
-        return Ok(mentors);
-    }
+    // [HttpGet("{instanceId}/attachments")]
+    // public async Task<IActionResult> GetAttachmentDetails(int instanceId, [FromQuery] int initiatorMEmpId)
+    // {
+    //     if (initiatorMEmpId <= 0) return BadRequest("A valid initiator employee ID is required.");
+    //     var attachments = await _workletRepository.GetAttachmentDetailsAsync(initiatorMEmpId, instanceId);
+    //     return Ok(attachments);
+    // }
+
+    // [HttpGet("{instanceId}/mentors")]
+    // public async Task<IActionResult> GetMentorDetails(int instanceId, [FromQuery] int initiatorMEmpId)
+    // {
+    //     if (initiatorMEmpId <= 0) return BadRequest("A valid initiator employee ID is required.");
+    //     var mentors = await _workletRepository.GetMentorDetailsAsync(initiatorMEmpId, instanceId);
+    //     return Ok(mentors);
 }

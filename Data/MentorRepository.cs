@@ -8,7 +8,7 @@ namespace PrismWorkletApi.Repositories
     public interface IMentorRepository
     {
         Task<IEnumerable<MentorSearchResult>> SearchAsync(string query);
-        Task<IEnumerable<CollegeModel>> GetCollegesAsync(int initiatorMEmpId, int instanceId);
+        //Task<IEnumerable<CollegeModel>> GetCollegesAsync(int initiatorMEmpId, int instanceId);
     }
 
     public sealed class MentorRepository : IMentorRepository
@@ -42,16 +42,16 @@ namespace PrismWorkletApi.Repositories
             return allMentors;
         }
 
-        public async Task<IEnumerable<CollegeModel>> GetCollegesAsync(int initiatorMEmpId, int instanceId)
-        {
-            using var conn = new SqlConnection(_connectionString);
+        // public async Task<IEnumerable<CollegeModel>> GetCollegesAsync(int initiatorMEmpId, int instanceId)
+        // {
+        //     using var conn = new SqlConnection(_connectionString);
 
-            // Pass the parameters to the stored procedure
-            return await conn.QueryAsync<CollegeModel>(
-                "PRISMWorklet_GetCollegeDetails",
-                new { InitiatorMEmpID = initiatorMEmpId, InstanceID = instanceId },
-                commandType: CommandType.StoredProcedure);
-        }
+        //     // Pass the parameters to the stored procedure
+        //     return await conn.QueryAsync<CollegeModel>(
+        //         "PRISMWorklet_GetCollegeDetails",
+        //         new { InitiatorMEmpID = initiatorMEmpId, InstanceID = instanceId },
+        //         commandType: CommandType.StoredProcedure);
+        // }
 
     }
 }

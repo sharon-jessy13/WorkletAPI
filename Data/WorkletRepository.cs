@@ -8,10 +8,13 @@ namespace PrismWorkletApi.Repositories
     public interface IWorkletRepository
     {
         Task<int> CreateWorkletAsync(WorkletCreateModel model);
-        Task<WorkletDetailsModel?> GetWorkletDetailsAsync(int initiatorMEmpID, int instanceID);
-        Task<IEnumerable<AttachmentModel>> GetAttachmentDetailsAsync(int initiatorMEmpID, int instanceID);
-        Task<IEnumerable<WorkletMentorDetailsModel>> GetMentorDetailsAsync(int initiatorMEmpID, int instanceID);
+        // Task<WorkletDetailsModel?> GetWorkletDetailsAsync(int initiatorMEmpID, int instanceID);
+        // Task<IEnumerable<AttachmentModel>> GetAttachmentDetailsAsync(int initiatorMEmpID, int instanceID);
+        // Task<IEnumerable<WorkletMentorDetailsModel>> GetMentorDetailsAsync(int initiatorMEmpID, int instanceID);
+
+        Task<WorkletFullDetailsModel?> GetFullWorkletDetailsAsync(int initiatorMEmpId, int instanceId);
     }
+
 
 
     public sealed class WorkletRepository : IWorkletRepository
@@ -102,29 +105,65 @@ namespace PrismWorkletApi.Repositories
             }
         }
 
-        public async Task<WorkletDetailsModel?> GetWorkletDetailsAsync(int initiatorMEmpID, int instanceID)
+        public async Task<WorkletFullDetailsModel?> GetFullWorkletDetailsAsync(int initiatorMEmpId, int instanceId)
         {
             using var conn = new SqlConnection(_connectionString);
-            var parameters = new { InitiatorMEmpID = initiatorMEmpID, InstanceID = instanceID };
-            return await conn.QueryFirstOrDefaultAsync<WorkletDetailsModel>(
-                "PRISMWorklet_GetWorkletDetails", parameters, commandType: CommandType.StoredProcedure);
+            var parameters = new { InitiatorMEmpID = initiatorMEmpId, InstanceID = instanceId };
+
+            // Step 1: Fetch the main worklet details.
+            var workletInfo = await conn.QueryFirstOrDefaultAsync<WorkletDetailsModel>(
+                "PRISMWorklet_GetWorkletDetails",
+                parameters,
+                commandType: CommandType.StoredProcedure);
+
+            if (workletInfo == null)
+            {
+                return null; 
+            }
+
+            // Step 2: Fetch the mentor and attachment details.
+            var mentors = await conn.QueryAsync<WorkletMentorDetailsModel>(
+                "PRISMWorklet_GetMentorDetails",
+                parameters,
+                commandType:CommandType.StoredProcedure);
+
+            var attachments = await conn.QueryAsync<AttachmentModel>(
+                "PRISMWorklet_GetAttachmentDetails",
+                parameters,
+                commandType:CommandType.StoredProcedure);
+
+            
+            return new WorkletFullDetailsModel
+            {
+                WorkletInfo = workletInfo,
+                Mentors = mentors,
+                Attachments = attachments
+            };
         }
 
-        public async Task<IEnumerable<AttachmentModel>> GetAttachmentDetailsAsync(int initiatorMEmpID, int instanceID)
-        {
-            using var conn = new SqlConnection(_connectionString);
-            var parameters = new { InitiatorMEmpID = initiatorMEmpID, InstanceID = instanceID };
-            return await conn.QueryAsync<AttachmentModel>(
-                "PRISMWorklet_GetAttachmentDetails", parameters, commandType: CommandType.StoredProcedure);
-        }
+        // public async Task<WorkletDetailsModel?> GetWorkletDetailsAsync(int initiatorMEmpID, int instanceID)
+        // {
+        //     using var conn = new SqlConnection(_connectionString);
+        //     var parameters = new { InitiatorMEmpID = initiatorMEmpID, InstanceID = instanceID };
+        //     return await conn.QueryFirstOrDefaultAsync<WorkletDetailsModel>(
+        //         "PRISMWorklet_GetWorkletDetails", parameters, commandType: CommandType.StoredProcedure);
+        // }
 
-        public async Task<IEnumerable<WorkletMentorDetailsModel>> GetMentorDetailsAsync(int initiatorMEmpID, int instanceID)
-        {
-            using var conn = new SqlConnection(_connectionString);
-            var parameters = new { InitiatorMEmpID = initiatorMEmpID, InstanceID = instanceID };
-            return await conn.QueryAsync<WorkletMentorDetailsModel>(
-                "PRISMWorklet_GetMentorDetails", parameters, commandType: CommandType.StoredProcedure);
-        }
+        // public async Task<IEnumerable<AttachmentModel>> GetAttachmentDetailsAsync(int initiatorMEmpID, int instanceID)
+        // {
+        //     using var conn = new SqlConnection(_connectionString);
+        //     var parameters = new { InitiatorMEmpID = initiatorMEmpID, InstanceID = instanceID };
+        //     return await conn.QueryAsync<AttachmentModel>(
+        //         "PRISMWorklet_GetAttachmentDetails", parameters, commandType: CommandType.StoredProcedure);
+        // }
+
+        // public async Task<IEnumerable<WorkletMentorDetailsModel>> GetMentorDetailsAsync(int initiatorMEmpID, int instanceID)
+        // {
+        //     using var conn = new SqlConnection(_connectionString);
+        //     var parameters = new { InitiatorMEmpID = initiatorMEmpID, InstanceID = instanceID };
+        //     return await conn.QueryAsync<WorkletMentorDetailsModel>(
+        //         "PRISMWorklet_GetMentorDetails", parameters, commandType: CommandType.StoredProcedure);
+        // }
 
 
     }

@@ -75,12 +75,21 @@ namespace PrismWorkletApi.Models
         public string? FilePath { get; set; }
         public DateTime UploadedDate { get; set; }
     }
-    
-    public class CollegeModel
+
+    public class WorkletFullDetailsModel
     {
-        public int CollegeId { get; set; }
-        public string CollegeName { get; set; } = string.Empty;
+        public WorkletDetailsModel? WorkletInfo { get; set; }
+        public IEnumerable<WorkletMentorDetailsModel>? Mentors { get; set; }
+        public IEnumerable<AttachmentModel>? Attachments { get; set; }
     }
+
+    
+    
+    // public class CollegeModel
+    // {
+    //     public int CollegeId { get; set; }
+    //     public string CollegeName { get; set; } = string.Empty;
+    // }
 
     public class WorkletMentorDetailsModel : MentorModel
     {
