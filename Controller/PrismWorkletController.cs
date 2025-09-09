@@ -78,9 +78,14 @@ public class PrismWorkletController : ControllerBase
     }
 
     [HttpGet("colleges")]
-    public async Task<IActionResult> GetColleges()
+    public async Task<IActionResult> GetColleges([FromQuery] int initiatorMEmpId, [FromQuery] int instanceId)
     {
-        var colleges = await _mentorRepository.GetCollegesAsync();
+        if (initiatorMEmpId <= 0 || instanceId <= 0)
+        {
+            return BadRequest("Initiator employee ID and instance ID are required.");
+        }
+
+        var colleges = await _mentorRepository.GetCollegesAsync(initiatorMEmpId, instanceId);
         return Ok(colleges);
     }
 

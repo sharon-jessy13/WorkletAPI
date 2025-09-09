@@ -1,33 +1,30 @@
 namespace PrismWorkletApi.Models
 {
     public class WorkletCreateModel
-    {
-        // Basic Details
-        public string Title { get; set; }
-        public string ProblemStatement { get; set; }
-        public string Prerequisites { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int StudentCount { get; set; }
-        public int InitiatorMEmpId { get; set; }
+{
+    public string Title { get; set; } = string.Empty;
+    public string ProblemStatement { get; set; } = string.Empty;
+    public string Prerequisites { get; set; } = string.Empty;
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int StudentCount { get; set; }
+    public int InitiatorMEmpId { get; set; }
+    public List<MentorModel> Mentors { get; set; } = new();
+    public string? GitHubUrl { get; set; }
 
-        // Mentor Details
-        public List<MentorModel> Mentors { get; set; } = new List<MentorModel>();
+    
+    public int Degree { get; set; }
+    public int Stream { get; set; }
+    public int WorkletComplexity { get; set; }
+    public bool DataCollection { get; set; }
 
-        // Additional Fields from the document
-        public string? GitHubUrl { get; set; }
-        public string? Degree { get; set; }
-        public string? Stream { get; set; }
-        public string? WorkletComplexity { get; set; }
-        public string? Research { get; set; }
-        public bool POC { get; set; }
-        public string? DataCollection { get; set; }
-        public bool IsLinkedProject { get; set; }
-        public int? ProjectID { get; set; }
-        public int DomainID { get; set; }
-        public string? OtherDomain { get; set; }
-    }
-
+    public string? Research { get; set; }
+    public bool POC { get; set; }
+    public bool IsLinkedProject { get; set; }
+    public int? ProjectID { get; set; }
+    public int DomainID { get; set; }
+    public string? OtherDomain { get; set; }
+}
     public class MentorModel
     {
         public int MentorId { get; set; }

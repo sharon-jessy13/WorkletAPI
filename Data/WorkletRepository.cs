@@ -54,9 +54,30 @@ namespace PrismWorkletApi.Repositories
                     model.StartDate,
                     model.EndDate,
                     model.StudentCount,
-                    IsActive = 1,
+                    GitHubUrl = model.GitHubUrl ?? string.Empty,
+                    model.Research,
+                    model.POC,
+                    LinkedProject = model.IsLinkedProject,
+
+                    ProjectID = model.IsLinkedProject ? model.ProjectID : 0,
+
+                    model.DomainID,
+                    model.OtherDomain,
+                    IsActive = true,
+                    IsSync = false,
                     CreatedOn = DateTime.UtcNow,
-                    GitHubUrl = model.GitHubUrl ?? string.Empty
+                    model.Degree,
+                    model.Stream,
+                    model.WorkletComplexity,
+                    model.DataCollection,
+                    ImagePath = "",
+                    Skills = "",
+                    Tags = "",
+                    StatusID = "",
+                    Progress = "",
+                    TechDomainID = "",
+                    // CertID = ""
+
                 }, transaction: tran, commandType: CommandType.StoredProcedure);
 
                 var secondaryMentors = model.Mentors.Where(m => !m.IsPrimary);
@@ -103,7 +124,7 @@ namespace PrismWorkletApi.Repositories
             return await conn.QueryAsync<WorkletMentorDetailsModel>(
                 "PRISMWorklet_GetMentorDetails", parameters, commandType: CommandType.StoredProcedure);
         }
-        
-        
+
+
     }
 }
