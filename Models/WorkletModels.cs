@@ -18,7 +18,7 @@ namespace PrismWorkletApi.Models
     public int WorkletComplexity { get; set; }
     public bool DataCollection { get; set; }
 
-    public string? Research { get; set; }
+    public bool Research { get; set; }
     public bool POC { get; set; }
     public bool IsLinkedProject { get; set; }
     public int? ProjectID { get; set; }
@@ -50,13 +50,22 @@ namespace PrismWorkletApi.Models
     {
         public int WorkletID { get; set; }
         public string? Title { get; set; }
-        public string? ProblemStatement { get; set; }
-        public string? Prerequisites { get; set; }
+        public string? ImagePath { get; set; }
+        public string? ProblemStmt { get; set; }
+        public string? Prerequest { get; set; }
+        public int ProjectID { get; set; }
+        public string? GitHubUrl { get; set; }
+        public int StatusID { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public int CreatedMentorID { get; set; }
+        public string? CreatedMentor { get; set; }
+        public string? Progress { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int StudentCount { get; set; }
-        public string? CreatedMentor { get; set; }
-        public string? GitHubUrl { get; set; }
+        public int Degree { get; set; }
+        public int Stream { get; set; }
+        public int WorkletComplexity { get; set; }
     }
 
     public class AttachmentModel

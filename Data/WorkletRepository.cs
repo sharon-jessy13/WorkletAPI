@@ -54,7 +54,7 @@ namespace PrismWorkletApi.Repositories
                     model.StartDate,
                     model.EndDate,
                     model.StudentCount,
-                    GitHubUrl = model.GitHubUrl ?? string.Empty,
+                    GitHubUrl = model.GitHubUrl ?? "",
                     model.Research,
                     model.POC,
                     LinkedProject = model.IsLinkedProject,
@@ -71,11 +71,12 @@ namespace PrismWorkletApi.Repositories
                     model.WorkletComplexity,
                     model.DataCollection,
                     ImagePath = "",
+                    TechDomainID = 0,
                     Skills = "",
                     Tags = "",
-                    StatusID = "",
+                    StatusID = 0,
                     Progress = "",
-                    TechDomainID = "",
+                    CertID = ""
                     // CertID = ""
 
                 }, transaction: tran, commandType: CommandType.StoredProcedure);
