@@ -8,13 +8,13 @@ namespace PrismWorkletApi.Repositories
     public interface IWorkletRepository
     {
         Task<int> CreateWorkletAsync(WorkletCreateModel model);
+
         // Task<WorkletDetailsModel?> GetWorkletDetailsAsync(int initiatorMEmpID, int instanceID);
         // Task<IEnumerable<AttachmentModel>> GetAttachmentDetailsAsync(int initiatorMEmpID, int instanceID);
         // Task<IEnumerable<WorkletMentorDetailsModel>> GetMentorDetailsAsync(int initiatorMEmpID, int instanceID);
 
         Task<WorkletFullDetailsModel?> GetFullWorkletDetailsAsync(int initiatorMEmpId, int instanceId);
     }
-
 
 
     public sealed class WorkletRepository : IWorkletRepository
@@ -80,7 +80,6 @@ namespace PrismWorkletApi.Repositories
                     StatusID = 0,
                     Progress = "",
                     CertID = ""
-                    // CertID = ""
 
                 }, transaction: tran, commandType: CommandType.StoredProcedure);
 

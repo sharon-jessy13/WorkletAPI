@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PrismWorkletApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6744bc2e4b761db46b4b63d14f8cee5bd2912b9f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0271003a9f479b5836c60b5921217dea2021eebf")]
 [assembly: System.Reflection.AssemblyProductAttribute("PrismWorkletApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PrismWorkletApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

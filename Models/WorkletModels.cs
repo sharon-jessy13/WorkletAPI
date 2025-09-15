@@ -11,8 +11,6 @@ namespace PrismWorkletApi.Models
     public int InitiatorMEmpId { get; set; }
     public List<MentorModel> Mentors { get; set; } = new();
     public string? GitHubUrl { get; set; }
-
-    
     public int Degree { get; set; }
     public int Stream { get; set; }
     public int WorkletComplexity { get; set; }

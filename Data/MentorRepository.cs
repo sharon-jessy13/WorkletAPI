@@ -8,6 +8,7 @@ namespace PrismWorkletApi.Repositories
     public interface IMentorRepository
     {
         Task<IEnumerable<MentorSearchResult>> SearchAsync(string query);
+
         //Task<IEnumerable<CollegeModel>> GetCollegesAsync(int initiatorMEmpId, int instanceId);
     }
 
@@ -45,7 +46,7 @@ namespace PrismWorkletApi.Repositories
         // public async Task<IEnumerable<CollegeModel>> GetCollegesAsync(int initiatorMEmpId, int instanceId)
         // {
         //     using var conn = new SqlConnection(_connectionString);
-
+        
         //     // Pass the parameters to the stored procedure
         //     return await conn.QueryAsync<CollegeModel>(
         //         "PRISMWorklet_GetCollegeDetails",

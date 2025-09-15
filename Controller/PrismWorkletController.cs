@@ -70,10 +70,15 @@ public class PrismWorkletController : ControllerBase
             }
             return Ok(data);
         }
+        catch (System.IO.FileFormatException ex)
+        {
+            _logger.LogError(ex, "Failed to extract data from PPTX file due to corrupted data: {FileName}", file.FileName);
+            return StatusCode(400, "The uploaded file is corrupted or not a valid PPTX file. Please upload a different file or fill the fields manually.");
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to extract data from PPTX file: {FileName}", file.FileName);
-            return StatusCode(500, "Failed to extract data. Please fill the fields manually.");
+            return StatusCode(500, "An unexpected error occurred. Please try again or fill the fields manually.");
         }
     }
 
