@@ -8,6 +8,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); 
 builder.Services.AddScoped<IWorkletRepository, WorkletRepository>();
 builder.Services.AddScoped<IMentorRepository, MentorRepository>();
+// builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+// builder.Services.AddScoped<ICollegeRepository, CollegeRepository>();
+
 
 var app = builder.Build();
 

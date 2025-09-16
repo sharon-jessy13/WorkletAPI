@@ -117,21 +117,21 @@ namespace PrismWorkletApi.Repositories
 
             if (workletInfo == null)
             {
-                return null; 
+                return null;
             }
 
             // Step 2: Fetch the mentor and attachment details.
             var mentors = await conn.QueryAsync<WorkletMentorDetailsModel>(
                 "PRISMWorklet_GetMentorDetails",
                 parameters,
-                commandType:CommandType.StoredProcedure);
+                commandType: CommandType.StoredProcedure);
 
             var attachments = await conn.QueryAsync<AttachmentModel>(
                 "PRISMWorklet_GetAttachmentDetails",
                 parameters,
-                commandType:CommandType.StoredProcedure);
+                commandType: CommandType.StoredProcedure);
 
-            
+
             return new WorkletFullDetailsModel
             {
                 WorkletInfo = workletInfo,
@@ -163,7 +163,53 @@ namespace PrismWorkletApi.Repositories
         //     return await conn.QueryAsync<WorkletMentorDetailsModel>(
         //         "PRISMWorklet_GetMentorDetails", parameters, commandType: CommandType.StoredProcedure);
         // }
+    }
+        public interface IStudentRepository
+        {
+            Task<IEnumerable<Student>> GetStudentsMax5Async();
+        }
+
+        public sealed class StudentRepository : IStudentRepository
+        {
+            private static readonly List<Student> _students = new List<Student>
+        {
+            new Student { StudentId = 1, StudentName = "Alex"},
+            new Student { StudentId = 2, StudentName = "Maria"},
+            new Student { StudentId = 3, StudentName = "John"},
+            new Student { StudentId = 4, StudentName = "Sarah"},
+            new Student { StudentId = 5, StudentName = "Michael"},
+            new Student { StudentId = 6, StudentName = "Emily"}
+        };
+
+            public Task<IEnumerable<Student>> GetStudentsMax5Async()
+            {
+                var studentsToReturn = _students.Take(5);
+                return Task.FromResult(studentsToReturn);
+            }
+        }
+
+        // New College Repository Interfaces and Classes
+        public interface ICollegeRepository
+        {
+            Task<IEnumerable<College>> GetCollegesAsync();
+        }
+
+        public sealed class CollegeRepository : ICollegeRepository
+        {
+            private static readonly List<College> _colleges = new List<College>
+        {
+            new College { CollegeId = 1, CollegeName = "University of Science and Tech"},
+            new College { CollegeId = 2, CollegeName = "State College of Engineering"},
+            new College { CollegeId = 3, CollegeName = "Global Business School"},
+            new College { CollegeId = 4, CollegeName = "Central Arts & Sciences College"},
+            new College { CollegeId = 5, CollegeName = "New Horizon University"}
+        };
+
+            public Task<IEnumerable<College>> GetCollegesAsync()
+            {
+                return Task.FromResult<IEnumerable<College>>(_colleges);
+            }
+        }
 
 
     }
-}

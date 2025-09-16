@@ -81,13 +81,17 @@ namespace PrismWorkletApi.Models
         public IEnumerable<AttachmentModel>? Attachments { get; set; }
     }
 
+    public class Student
+    {
+        public int StudentId { get; set; }
+        public string StudentName { get; set; }
+    }
     
-    
-    // public class CollegeModel
-    // {
-    //     public int CollegeId { get; set; }
-    //     public string CollegeName { get; set; } = string.Empty;
-    // }
+    public class College
+    {
+        public int CollegeId { get; set; }
+        public string CollegeName { get; set; } = string.Empty;
+    }
 
     public class WorkletMentorDetailsModel : MentorModel
     {

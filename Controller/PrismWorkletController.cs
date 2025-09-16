@@ -11,15 +11,21 @@ using System.Linq;
 public class PrismWorkletController : ControllerBase
 {
     private readonly IWorkletRepository _workletRepository;
-    private readonly IMentorRepository _mentorRepository;
-    private readonly ILogger<PrismWorkletController> _logger;
+        private readonly IStudentRepository _studentRepository;
+        private readonly ICollegeRepository _collegeRepository;
+        private readonly IMentorRepository _mentorRepository;
+        private readonly ILogger<PrismWorkletController> _logger;
 
     public PrismWorkletController(
         IWorkletRepository workletRepository,
+        IStudentRepository studentRepository,
+        ICollegeRepository collegeRepository,
         IMentorRepository mentorRepository,
         ILogger<PrismWorkletController> logger)
     {
         _workletRepository = workletRepository;
+        _studentRepository = studentRepository;
+        _collegeRepository = collegeRepository;
         _mentorRepository = mentorRepository;
         _logger = logger;
     }
@@ -93,6 +99,21 @@ public class PrismWorkletController : ControllerBase
     //     var colleges = await _mentorRepository.GetCollegesAsync(initiatorMEmpId, instanceId);
     //     return Ok(colleges);
     // }
+
+    [HttpGet("students")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        {
+            var students = await _studentRepository.GetStudentsMax5Async();
+            return Ok(students);
+        }
+
+        // Endpoint for point 5: Prepopulate College list
+        [HttpGet("colleges")]
+        public async Task<ActionResult<IEnumerable<College>>> GetColleges()
+        {
+            var colleges = await _collegeRepository.GetCollegesAsync();
+            return Ok(colleges);
+        }
 
     [HttpGet("mentors/search")]
     public async Task<IActionResult> SearchMentors([FromQuery] string query)
